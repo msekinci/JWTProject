@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MSESoftware.JWTProject.Business.Containers.MicrosoftIOC;
+using MSESoftware.JWTProject.WebAPI.CustomFilters;
 
 namespace MSESoftware.JWTProject.WebAPI
 {
@@ -20,6 +21,9 @@ namespace MSESoftware.JWTProject.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Bu attribute'u kullanýrken Generic object'in ne olduðunu bilmediði için gelen objelerin türünü kullanacak Generic'e eþitle diyoruz.
+            services.AddScoped(typeof(ValidId<>));
+
             services.AddDependencies();
             services.AddControllers().AddFluentValidation();
         }

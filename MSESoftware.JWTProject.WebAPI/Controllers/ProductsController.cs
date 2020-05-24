@@ -26,6 +26,7 @@ namespace MSESoftware.JWTProject.WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(ValidId<Product>))]
         public async Task<IActionResult> GetById(int id)
         {
             var product = await _productService.GetByIdAsync(id);
@@ -53,7 +54,8 @@ namespace MSESoftware.JWTProject.WebAPI.Controllers
             return NoContent();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
+        [ServiceFilter(typeof(ValidId<Product>))]
         public async Task<IActionResult> Delete(int id)
         {
             await _productService.RemoveAsync(new Product { Id = id });
