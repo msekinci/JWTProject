@@ -1,11 +1,15 @@
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using MSESoftware.JWTProject.Business.Containers.MicrosoftIOC;
+using MSESoftware.JWTProject.Business.StringInfos;
 using MSESoftware.JWTProject.WebAPI.CustomFilters;
+using System;
+using System.Text;
 
 namespace MSESoftware.JWTProject.WebAPI
 {
@@ -25,6 +29,19 @@ namespace MSESoftware.JWTProject.WebAPI
             services.AddScoped(typeof(ValidId<>));
 
             services.AddDependencies();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt => 
+            {
+                opt.RequireHttpsMetadata = false;
+                opt.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidIssuer = JWTInfo.Issuer,
+                    ValidAudience = JWTInfo.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JWTInfo.SecurityKey)),
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero //Server'a bir zaman farký koymamasý için
+                };
+            });
             services.AddControllers().AddFluentValidation();
         }
 
@@ -40,6 +57,8 @@ namespace MSESoftware.JWTProject.WebAPI
             app.UseExceptionHandler("/Error");
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
