@@ -31,10 +31,13 @@ namespace MSESoftware.JWTProject.WebAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
+
+            //Eðer bir hata gelirse, onu bizim Error Page'imize gönder
+            app.UseExceptionHandler("/Error");
 
             app.UseRouting();
 

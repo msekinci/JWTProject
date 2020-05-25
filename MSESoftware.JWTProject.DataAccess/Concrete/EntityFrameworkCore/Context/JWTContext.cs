@@ -9,7 +9,7 @@ namespace MSESoftware.JWTProject.DataAccess.Concrete.EntityFrameworkCore.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=Serkan-Ekinci;Database=JWTProjectTutorial;Trusted_Connection=true");
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
