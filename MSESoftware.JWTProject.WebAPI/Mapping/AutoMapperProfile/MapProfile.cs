@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MSESoftware.JWTProject.Entities.Concrete;
+using MSESoftware.JWTProject.Entities.DTOs.AppUserDTOs;
 using MSESoftware.JWTProject.Entities.DTOs.ProductDTOs;
 
 namespace MSESoftware.JWTProject.WebAPI.Mapping.AutoMapperProfile
@@ -17,6 +18,12 @@ namespace MSESoftware.JWTProject.WebAPI.Mapping.AutoMapperProfile
 
             CreateMap<ProductListDTO, Product>();
             CreateMap<Product, ProductListDTO>();
+            #endregion
+
+            #region Product Mapping
+            CreateMap<AppUserSignUpDTO, AppUser>();
+            CreateMap<AppUser, AppUserSignUpDTO>();
+
             #endregion
         }
     }

@@ -7,6 +7,6 @@ namespace MSESoftware.JWTProject.Business.Interfaces
 {
     public interface IJWTService
     {
-        public string GenerateJWTToken(AppUser appUser, List<AppRole> roles);
+        public string GenerateJWT(AppUser appUser, List<AppRole> roles);
     }
 }

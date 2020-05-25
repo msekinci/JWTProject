@@ -5,6 +5,7 @@ using MSESoftware.JWTProject.Business.Interfaces;
 using MSESoftware.JWTProject.Business.ValidationRules.FluentValidation;
 using MSESoftware.JWTProject.DataAccess.Concrete.EntityFrameworkCore.Repositories;
 using MSESoftware.JWTProject.DataAccess.Interfaces;
+using MSESoftware.JWTProject.Entities.DTOs.AppUserDTOs;
 using MSESoftware.JWTProject.Entities.DTOs.ProductDTOs;
 
 namespace MSESoftware.JWTProject.Business.Containers.MicrosoftIOC
@@ -28,8 +29,16 @@ namespace MSESoftware.JWTProject.Business.Containers.MicrosoftIOC
             services.AddScoped<IAppUserRoleDal, EFAppUserRoleRepository>();
             services.AddScoped<IAppUserRoleService, AppUserRoleManager>();
 
+            services.AddScoped<IJWTService, JWTManager>();
+
             services.AddTransient<IValidator<ProductAddDTO>, ProductAddDTOValidator>();
             services.AddTransient<IValidator<ProductUpdateDTO>, ProductUpdateDTOValidator>();
+
+            services.AddTransient<IValidator<ProductAddDTO>, ProductAddDTOValidator>();
+            services.AddTransient<IValidator<ProductUpdateDTO>, ProductUpdateDTOValidator>();
+
+            services.AddTransient<IValidator<AppUserSignInDTO>, AppUserSignInDTOValidator>();
+            services.AddTransient<IValidator<AppUserSignUpDTO>, AppUserSignUpDTOValidator>();
         }
     }
 }

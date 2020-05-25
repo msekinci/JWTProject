@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MSESoftware.JWTProject.Business.Interfaces;
+using MSESoftware.JWTProject.Business.StringInfos;
 using MSESoftware.JWTProject.Entities.Concrete;
 using MSESoftware.JWTProject.Entities.DTOs.ProductDTOs;
 using MSESoftware.JWTProject.WebAPI.CustomFilters;
@@ -22,6 +24,7 @@ namespace MSESoftware.JWTProject.WebAPI.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(Roles = RoleInfo.Admin + "," + RoleInfo.Member)]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -29,6 +32,7 @@ namespace MSESoftware.JWTProject.WebAPI.Controllers
             return Ok(_mapper.Map<List<ProductListDTO>>(allProducts));
         }
 
+        [Authorize(Roles = RoleInfo.Admin + "," + RoleInfo.Member)]
         [HttpGet("{id}")]
         [ServiceFilter(typeof(ValidId<Product>))]
         public async Task<IActionResult> GetById(int id)
@@ -37,6 +41,7 @@ namespace MSESoftware.JWTProject.WebAPI.Controllers
             return Ok(_mapper.Map<ProductListDTO>(product));
         }
 
+        [Authorize(Roles = RoleInfo.Admin)]
         [ValidModel]
         [HttpPost]
         public async Task<IActionResult> Add(ProductAddDTO productAddDTO)
@@ -45,6 +50,7 @@ namespace MSESoftware.JWTProject.WebAPI.Controllers
             return Created("", productAddDTO);
         }
 
+        [Authorize(Roles = RoleInfo.Admin)]
         [ValidModel]
         [HttpPut]
         public async Task<IActionResult> Update(ProductUpdateDTO productUpdateDTO)
@@ -53,6 +59,7 @@ namespace MSESoftware.JWTProject.WebAPI.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = RoleInfo.Admin)]
         [HttpDelete("{id}")]
         [ServiceFilter(typeof(ValidId<Product>))]
         public async Task<IActionResult> Delete(int id)

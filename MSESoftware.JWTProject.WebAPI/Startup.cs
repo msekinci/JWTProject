@@ -1,3 +1,4 @@
+using AutoMapper;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using MSESoftware.JWTProject.Business.Containers.MicrosoftIOC;
+using MSESoftware.JWTProject.Business.Interfaces;
 using MSESoftware.JWTProject.Business.StringInfos;
 using MSESoftware.JWTProject.WebAPI.CustomFilters;
 using System;
@@ -29,6 +31,9 @@ namespace MSESoftware.JWTProject.WebAPI
             services.AddScoped(typeof(ValidId<>));
 
             services.AddDependencies();
+
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt => 
             {
                 opt.RequireHttpsMetadata = false;
@@ -46,7 +51,7 @@ namespace MSESoftware.JWTProject.WebAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IAppUserService appUserService, IAppUserRoleService appUserRoleService, IAppRoleService appRoleService)
         {
             //if (env.IsDevelopment())
             //{
@@ -55,6 +60,8 @@ namespace MSESoftware.JWTProject.WebAPI
 
             //Eðer bir hata gelirse, onu bizim Error Page'imize gönder
             app.UseExceptionHandler("/Error");
+
+            JWTIdentityInitializer.Seed(appUserService, appUserRoleService, appRoleService).Wait();
 
             app.UseRouting();
 

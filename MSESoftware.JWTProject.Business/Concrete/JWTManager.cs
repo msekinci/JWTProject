@@ -12,7 +12,7 @@ namespace MSESoftware.JWTProject.Business.Concrete
 {
     public class JWTManager : IJWTService
     {
-        public string GenerateJWTToken(AppUser appUser, List<AppRole> roles)
+        public string GenerateJWT(AppUser appUser, List<AppRole> roles)
         {
             SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JWTInfo.SecurityKey));
 
@@ -39,7 +39,7 @@ namespace MSESoftware.JWTProject.Business.Concrete
             claims.Add(new Claim(ClaimTypes.Name, appUser.UserName));
             claims.Add(new Claim(ClaimTypes.NameIdentifier, appUser.Id.ToString()));
 
-            if (roles.Count > 0)
+            if (roles?.Count > 0)
             {
                 foreach (var role in roles)
                 {
