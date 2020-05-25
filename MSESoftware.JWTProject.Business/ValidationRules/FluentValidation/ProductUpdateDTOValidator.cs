@@ -7,6 +7,7 @@ namespace MSESoftware.JWTProject.Business.ValidationRules.FluentValidation
     {
         public ProductUpdateDTOValidator()
         {
+            RuleFor(x => x.Id).InclusiveBetween(0, int.MaxValue);
             RuleFor(x => x.Name).NotEmpty().WithMessage("Name cannot be empty");
         }
     }
