@@ -28,6 +28,7 @@ namespace JWTTutorialFrontend
             }
 
             app.UseRouting();
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {
