@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using JWTTutorialFrontend.APIServices.Concrete;
+using JWTTutorialFrontend.APIServices.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -17,6 +14,10 @@ namespace JWTTutorialFrontend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSession();
+            services.AddHttpContextAccessor();
+
+            services.AddScoped<IAuthService, AuthManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -28,6 +29,7 @@ namespace JWTTutorialFrontend
             }
 
             app.UseRouting();
+            app.UseSession();
             app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
