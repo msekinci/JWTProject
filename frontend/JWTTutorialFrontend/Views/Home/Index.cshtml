@@ -1,3 +1,29 @@
-<h4>
-    Test
-</h4>
+@model List<ProductList>
+    @if (Model==null)
+    {
+        <div class="text-center">
+            <h4>Authorization Error</h4>
+            <a asp-action="SignIn" asp-controller="Account">Sign In</a>
+        </div>
+        
+    }else{
+        <a asp-action="Create" class="btn btn-success">Add New Product</a>
+        <table class="table table-striped">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Operations</th>
+            </tr>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td scope="row">@product.Id</td>
+                    <td scope="row">@product.Name</td>
+                    <td scope="row">
+                        <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-sm btn-primary">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@product.Id" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    }
