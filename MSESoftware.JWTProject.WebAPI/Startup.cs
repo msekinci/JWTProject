@@ -10,6 +10,7 @@ using MSESoftware.JWTProject.Business.Containers.MicrosoftIOC;
 using MSESoftware.JWTProject.Business.Interfaces;
 using MSESoftware.JWTProject.Business.StringInfos;
 using MSESoftware.JWTProject.WebAPI.CustomFilters;
+using MSESoftware.JWTProject.WebAPI.InfrastructureSwagger;
 using System;
 using System.Text;
 
@@ -47,7 +48,10 @@ namespace MSESoftware.JWTProject.WebAPI
                     ClockSkew = TimeSpan.Zero //Server'a bir zaman farký koymamasý için
                 };
             });
+
             services.AddControllers().AddFluentValidation();
+
+            SwaggerServiceExtensions.AddSwaggerDocumentation(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,6 +66,8 @@ namespace MSESoftware.JWTProject.WebAPI
             app.UseExceptionHandler("/Error");
 
             JWTIdentityInitializer.Seed(appUserService, appUserRoleService, appRoleService).Wait();
+
+            SwaggerServiceExtensions.UseSwaggerDocumentation(app);
 
             app.UseRouting();
 
