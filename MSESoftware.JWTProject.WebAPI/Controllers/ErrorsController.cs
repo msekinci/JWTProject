@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MSESoftware.JWTProject.WebAPI.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Route("api/[controller]")]
     [ApiController]
     public class ErrorsController : ControllerBase
